@@ -51,10 +51,10 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 
                 if(widget.movie == null) {
                   _moviesRepo.addMovie(_newMovie);
-                  Navigator.pop(context, _newMovie);
+                  Navigator.pop(context);
                 }else {
                   _moviesRepo.updateMovie(_newMovie);
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  Navigator.pop(context, _newMovie);
                 }
               },
             )

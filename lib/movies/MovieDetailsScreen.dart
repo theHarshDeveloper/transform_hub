@@ -7,10 +7,23 @@ import 'package:transform_hub/movies/MovieGenresWidget.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   final Movie movie;
 
   const MovieDetailsScreen({Key? key, required this.movie}) : super(key: key);
+
+  @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  late Movie movie;
+
+  @override
+  void initState() {
+    movie = widget.movie;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +59,7 @@ class MovieDetailsScreen extends StatelessWidget {
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
                             onPressed: () {
-                              moviesLocator.get<MoviesRepo>().deleteMovie(movie);
+                              moviesLocator.get<MoviesRepo>().deleteMovie(widget.movie);
                               Navigator.popUntil(context, ModalRoute.withName('/'));
                             },
                             child: const Text(
@@ -64,8 +77,19 @@ class MovieDetailsScreen extends StatelessWidget {
               size: 20,
             ),
             tooltip: 'Edit Movie',
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (bc) => AddMovieScreen(movie: movie)));
+            onPressed: () async {
+              dynamic result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (bc) => AddMovieScreen(movie: widget.movie),
+                ),
+              );
+
+              if (result != null) {
+                setState(() {
+                  movie = result;
+                });
+              }
             },
           ),
         ],
@@ -78,7 +102,7 @@ class MovieDetailsScreen extends StatelessWidget {
           elevation: 4,
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (bc) => MovieDetailsScreen(movie: movie)));
+              Navigator.push(context, MaterialPageRoute(builder: (bc) => MovieDetailsScreen(movie: widget.movie)));
             },
             splashColor: Colors.white60,
             child: Padding(
@@ -87,14 +111,14 @@ class MovieDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    movie.title,
+                    widget.movie.title,
                     style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Directed By ${movie.director}",
+                    "Directed By ${widget.movie.director}",
                     style: const TextStyle(fontSize: 20),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -105,12 +129,12 @@ class MovieDetailsScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   Text(
-                    movie.summary,
+                    widget.movie.summary,
                     style: const TextStyle(fontSize: 20),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 12),
-                  MovieGeneresWidget(movie: movie)
+                  MovieGeneresWidget(movie: widget.movie)
                 ],
               ),
             ),
