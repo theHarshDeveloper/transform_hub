@@ -12,17 +12,23 @@ abstract class _MoviesRepo with Store {
   @action
   addMovie(Movie newMovie) {
     List<Movie> l = movies;
+    newMovie.id = movies.length.toString();
     l.add(newMovie);
     movies = l;
   }
 
   @action
-  updateMovie(Movie newMovie, int index) {
-    movies[index] = newMovie;
+  updateMovie(Movie newMovie) {
+    List<Movie> l = movies;
+    int i = l.indexWhere((element) => element.id == newMovie.id);
+    l[i] = newMovie;
+    movies = l;
   }
 
   @action
   deleteMovie(Movie newMovie) {
-    movies.remove(newMovie);
+    List<Movie> l = movies;
+    l.remove(newMovie);
+    movies = l;
   }
 }

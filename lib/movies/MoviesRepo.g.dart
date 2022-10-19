@@ -39,11 +39,11 @@ mixin _$MoviesRepo on _MoviesRepo, Store {
   }
 
   @override
-  dynamic updateMovie(Movie newMovie, int index) {
+  dynamic updateMovie(Movie newMovie) {
     final _$actionInfo = _$_MoviesRepoActionController.startAction(
         name: '_MoviesRepo.updateMovie');
     try {
-      return super.updateMovie(newMovie, index);
+      return super.updateMovie(newMovie);
     } finally {
       _$_MoviesRepoActionController.endAction(_$actionInfo);
     }
