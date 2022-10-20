@@ -1,14 +1,15 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:transform_hub/movies/AddMovieScreen.dart';
 import 'package:transform_hub/movies/Movie.dart';
-import 'package:transform_hub/movies/MovieDetailsScreen.dart';
 import 'package:transform_hub/movies/MovieGenresWidget.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
 import 'package:transform_hub/router/AppRouter.gr.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class MovieListScreen extends StatelessWidget {
   MovieListScreen({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class MovieListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Movies"),
+        automaticallyImplyLeading: !kIsWeb,
       ),
       backgroundColor: Colors.white.withAlpha(230),
       body: Observer(

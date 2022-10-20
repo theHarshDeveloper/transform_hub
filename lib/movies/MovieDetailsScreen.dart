@@ -8,6 +8,7 @@ import 'package:transform_hub/movies/MovieGenresWidget.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
 import 'package:transform_hub/router/AppRouter.gr.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class MovieDetailsScreen extends StatefulWidget {
   final Movie movie;
@@ -32,6 +33,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Details"),
+        automaticallyImplyLeading: !kIsWeb,
         actions: [
           IconButton(
             icon: const Icon(
@@ -62,7 +64,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
                             onPressed: () {
                               moviesLocator.get<MoviesRepo>().deleteMovie(widget.movie);
-                              AutoRouter.of(context).popUntil((Route<dynamic> route)=> route == Route<MovieListRoute>);
+                              Navigator.popUntil(context, ModalRoute.withName('MovieListRoute'));
                             },
                             child: Text(
                               'Yes',

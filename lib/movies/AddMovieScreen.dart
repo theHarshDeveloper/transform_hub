@@ -7,6 +7,7 @@ import 'package:transform_hub/movies/Movie.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
 import 'package:transform_hub/util/StringExtension.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AddMovieScreen extends StatefulWidget {
   final Movie? movie;
@@ -45,6 +46,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add New Movie"),
+        automaticallyImplyLeading: !kIsWeb,
       ),
       floatingActionButton: showFab
           ? FloatingActionButton(
@@ -55,14 +57,14 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 if (widget.movie == null) {
                   _moviesRepo.addMovie(_newMovie);
                   AutoRouter.of(context).pop();
-                }else {
+                } else {
                   _moviesRepo.updateMovie(_newMovie);
                   AutoRouter.of(context).pop(_newMovie);
                 }
               },
             )
           : null,
-      body: SingleChildScrollView (
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
@@ -125,6 +127,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     _newMovie.summary = str.inCaps;
                   },
                   maxLines: 4,
+                  textAlignVertical: TextAlignVertical.top,
                   validator: (str) {
                     return (str == null || str.isEmpty) ? "Summary is required" : null;
                   },
@@ -150,6 +153,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _addGenreItem(setState),
+          if (kIsWeb) const SizedBox(height: 10),
           Wrap(
             runSpacing: 6,
             spacing: 6,
@@ -184,13 +188,13 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 
   _addGenreItem(StateSetter setState) {
     String genre = '';
-    TextEditingController _txtController = TextEditingController();
+    TextEditingController txtController = TextEditingController();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: TextFormField(
-            controller: _txtController,
+            controller: txtController,
             decoration: InputDecoration(
               hintText: 'Genre',
               border: AppTheme.tf_outline,
@@ -208,7 +212,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
             focusNode: _genreNode,
             textInputAction: TextInputAction.go,
             onFieldSubmitted: (str) {
-              _onAddGenre(genre, _txtController);
+              _onAddGenre(genre, txtController);
             },
           ),
         ),
@@ -219,7 +223,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
           elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           onPressed: () {
-            _onAddGenre(genre, _txtController);
+            _onAddGenre(genre, txtController);
           },
           child: const Text('Add Genre'),
         )
