@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,6 +7,7 @@ import 'package:transform_hub/movies/Movie.dart';
 import 'package:transform_hub/movies/MovieGenresWidget.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
+import 'package:transform_hub/router/AppRouter.gr.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final Movie movie;
@@ -47,11 +49,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                             onPressed: () {
-                              Navigator.pop(context);
+                              AutoRouter.of(context).navigateBack();
                             },
-                            child: const Text(
+                            child: Text(
                               'No',
-                              style: TextStyle(color: Colors.orange),
+                              style: TextStyle(color: Theme.of(context).primaryColor),
                             ),
                           ),
                           MaterialButton(
@@ -60,11 +62,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
                             onPressed: () {
                               moviesLocator.get<MoviesRepo>().deleteMovie(widget.movie);
-                              Navigator.popUntil(context, ModalRoute.withName('/'));
+                              AutoRouter.of(context).popUntil((Route<dynamic> route)=> route == Route<MovieListRoute>);
                             },
-                            child: const Text(
+                            child: Text(
                               'Yes',
-                              style: TextStyle(color: Colors.orange),
+                              style: TextStyle(color: Theme.of(context).primaryColor),
                             ),
                           ),
                         ],
@@ -78,12 +80,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
             tooltip: 'Edit Movie',
             onPressed: () async {
-              dynamic result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (bc) => AddMovieScreen(movie: widget.movie),
-                ),
-              );
+              dynamic result = await AutoRouter.of(context).push(AddMovieRoute(movie: widget.movie));
+
+              // dynamic result = await Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (bc) => AddMovieScreen(movie: widget.movie),
+              //   ),
+              // );
 
               if (result != null) {
                 setState(() {
@@ -102,7 +106,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           elevation: 4,
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (bc) => MovieDetailsScreen(movie: widget.movie)));
+              AutoRouter.of(context).push(MovieDetailsRoute(movie: widget.movie));
             },
             splashColor: Colors.white60,
             child: Padding(

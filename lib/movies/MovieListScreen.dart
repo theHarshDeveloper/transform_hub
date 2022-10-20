@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,6 +8,7 @@ import 'package:transform_hub/movies/MovieDetailsScreen.dart';
 import 'package:transform_hub/movies/MovieGenresWidget.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
+import 'package:transform_hub/router/AppRouter.gr.dart';
 
 class MovieListScreen extends StatelessWidget {
   MovieListScreen({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class MovieListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Movies"),
       ),
+      backgroundColor: Colors.white.withAlpha(230),
       body: Observer(
         builder: (bc) {
           if (_moviesRepo.movies.isEmpty) {
@@ -38,7 +41,7 @@ class MovieListScreen extends StatelessWidget {
           ? FloatingActionButton(
               child: const Icon(Icons.add),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (bc) => AddMovieScreen()));
+                AutoRouter.of(context).push(AddMovieRoute());
               },
             )
           : null,
@@ -62,7 +65,7 @@ class MoviesListView extends StatelessWidget {
       separatorBuilder: (bc, index) {
         return Container(
           height: 1,
-          color: Colors.orangeAccent.withOpacity(0.5),
+          color: Theme.of(context).primaryColor.withOpacity(0.5),
         );
       },
     );
@@ -84,7 +87,7 @@ class MovieListItem extends StatelessWidget {
         elevation: 4,
         child: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (bc) => MovieDetailsScreen(movie: movie)));
+            AutoRouter.of(context).push(MovieDetailsRoute(movie: movie));
           },
           splashColor: Colors.white60,
           child: Padding(

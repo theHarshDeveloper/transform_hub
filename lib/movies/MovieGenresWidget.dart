@@ -13,17 +13,17 @@ class MovieGeneresWidget extends StatelessWidget {
       runSpacing: 2,
       spacing: 6,
       alignment: WrapAlignment.end,
-      children: movie.genres.take(displayMax > 0 ? displayMax : movie.genres.length).map((e) => _genreItem(e)).toList(),
+      children: movie.genres.take(displayMax > 0 ? displayMax : movie.genres.length).map((e) => _genreItem(e, context)).toList(),
     );
   }
 
-  Widget _genreItem(String genre) {
+  Widget _genreItem(String genre, BuildContext context) {
     return Chip(
       label: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Text(genre),
       ),
-      backgroundColor: Colors.orange.withOpacity(0.5),
+      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
     );
   }
 
