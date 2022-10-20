@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:transform_hub/movies/Movie.dart';
+import 'package:transform_hub/entities/Movie.dart';
 
 class MovieGeneresWidget extends StatelessWidget {
   final Movie movie;

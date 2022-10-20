@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:transform_hub/movies/AddMovieScreen.dart';
-import 'package:transform_hub/movies/Movie.dart';
+import 'package:transform_hub/entities/Movie.dart';
 import 'package:transform_hub/movies/MovieGenresWidget.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';

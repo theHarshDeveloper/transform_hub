@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:transform_hub/AppTheme.dart';
-import 'package:transform_hub/movies/Movie.dart';
+import 'package:transform_hub/entities/Movie.dart';
 import 'package:transform_hub/movies/MoviesLocator.dart';
 import 'package:transform_hub/movies/MoviesRepo.dart';
 import 'package:transform_hub/util/StringExtension.dart';
@@ -22,9 +22,9 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   late final Movie _newMovie;
   final MoviesRepo _moviesRepo = moviesLocator.get<MoviesRepo>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _directorController = TextEditingController();
-  TextEditingController _summaryController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _directorController = TextEditingController();
+  final TextEditingController _summaryController = TextEditingController();
 
   final FocusNode _genreNode = FocusNode(), _directorNode = FocusNode(), _summaryNode = FocusNode();
 

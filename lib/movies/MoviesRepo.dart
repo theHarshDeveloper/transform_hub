@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:transform_hub/movies/Movie.dart';
+import 'package:transform_hub/entities/Movie.dart';
 
 part 'MoviesRepo.g.dart';
 
